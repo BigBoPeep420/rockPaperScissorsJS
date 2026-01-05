@@ -5,8 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
     <script src="./scripts/rps.js" defer></script>
-</head>
+    <link rel="stylesheet" href="./styles/style.css">
+</head> 
 <body>
-    <h4>Open Chrome Inspector Console and call playGame()</h4>
-</body>
+    <div id="content">
+        <div id="header">
+            <h2>Rock Paper Scissors</h2>
+        </div>
+
+        <div id="game">
+            <div id="gameInfo">
+                <p id="row1">Score</p>
+                <p id="row2">Round</p>
+            </div>
+            <div id="gameInput">
+                <ul id="inputButtons">
+                    <li><div id="rock">Rock</div></li>
+                    <li><div id="paper">Paper</div></li>
+                    <li><div id="scissors">Scissors</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="footer">
+            <h4>Copyright © Lane Robey</h4>
+        </div>
+    </div>
+</body>    
 </html>
