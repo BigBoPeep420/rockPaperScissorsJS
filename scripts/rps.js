@@ -1,3 +1,8 @@
+//Global Variables
+let humanScore = 0;
+let computerScore = 0;
+
+//Return 'rock', 'paper', or 'scissors' randomly
 function getComputerChoice(){
     let num = Math.floor((Math.random()*3)+1)
     switch(num){
@@ -13,6 +18,9 @@ function getComputerChoice(){
     }
 }
 
+//Prompt user for input
+//IF input is a number THEN RETURN 'rock', 'paper', or 'scissors'
+//ELSE RETURN input     (We assume user input valid response)
 function getHumanChoice(){
     let uc = prompt("Enter 1-3, or Rock, Paper, or Scissors");
     if(!isNaN(uc)){
@@ -32,9 +40,12 @@ function getHumanChoice(){
     }
 }
 
-let humanScore = 0;
-let computerScore = 0;
-
+//Take two strings and convert to lower
+//CALL checkWinner() and store result
+//IF result == 'human' THEN human wins
+//IF result == 'computer' THEN computer wins
+//IF result == 'tie' THEN no one wins
+//ELSE there was an invalid parameter in checkWinner() and no one wins
 function playRound(hc, cc){
     hc = hc.toLowerCase();
     cc = cc.toLowerCase();
@@ -57,6 +68,9 @@ function playRound(hc, cc){
     }
 }
 
+//Take two strings that contain 'rock', 'paper', or 'scissors'
+//SWITCH on first parameter
+//In each case, check against second parameter and return a result
 function checkWinner(hc, cc){
     switch(hc){
         case "rock":
@@ -91,6 +105,8 @@ function checkWinner(hc, cc){
     }
 }
 
+//Plays 5 rounds, prompting user for input each round with getHumanChoice()
+//At the end declares the winner and resets the scores to 0
 function playGame(){
     for (let rnds = 1; rnds < 6; rnds++) {
         let hc = getHumanChoice();
