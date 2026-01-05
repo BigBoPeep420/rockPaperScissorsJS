@@ -1,8 +1,8 @@
-//Global Variables
 let humanScore = 0;
 let computerScore = 0;
+const gameInput = document.querySelector("#gameInput");
+const gameInfo = document.querySelector("#gameInfo");
 
-//Return 'rock', 'paper', or 'scissors' randomly
 function getComputerChoice(){
     let num = Math.floor((Math.random()*3)+1)
     switch(num){
@@ -17,60 +17,6 @@ function getComputerChoice(){
             break;
     }
 }
-
-//Prompt user for input
-//IF input is a number THEN RETURN 'rock', 'paper', or 'scissors'
-//ELSE RETURN input     (We assume user input valid response)
-function getHumanChoice(){
-    let uc = prompt("Enter 1-3, or Rock, Paper, or Scissors");
-    if(!isNaN(uc)){
-        switch(parseInt(uc)){
-            case 1:
-                return "rock";
-                break;
-            case 2:
-                return "paper";
-                break;
-            default:
-                return "scissors";
-                break;
-        }
-    }else{
-        return uc;
-    }
-}
-
-//Take two strings and convert to lower
-//CALL checkWinner() and store result
-//IF result == 'human' THEN human wins
-//IF result == 'computer' THEN computer wins
-//IF result == 'tie' THEN no one wins
-//ELSE there was an invalid parameter in checkWinner() and no one wins
-function playRound(hc, cc){
-    hc = hc.toLowerCase();
-    cc = cc.toLowerCase();
-    result = checkWinner(hc, cc);
-    switch (result) {
-        case "human":
-            humanScore++;
-            console.log("You WIN! | Human: " + humanScore + "  Computer: " + computerScore);
-            break;
-        case "computer":
-            computerScore++;
-            console.log("You LOSE! | Human: " + humanScore + "  Computer: " + computerScore);
-            break;
-        case "tie":
-            console.log("TIE! | Human: " + humanScore + "  Computer: " + computerScore);
-            break;   
-        default:
-            console.log("INVALID GAME!");
-            break;
-    }
-}
-
-//Take two strings that contain 'rock', 'paper', or 'scissors'
-//SWITCH on first parameter
-//In each case, check against second parameter and return a result
 function checkWinner(hc, cc){
     switch(hc){
         case "rock":
@@ -104,27 +50,54 @@ function checkWinner(hc, cc){
             return "invalid";
     }
 }
-
-//Plays 5 rounds, prompting user for input each round with getHumanChoice()
-//At the end declares the winner and resets the scores to 0
-function playGame(){
-    for (let rnds = 1; rnds < 6; rnds++) {
-        let hc = getHumanChoice();
-        let cc = getComputerChoice();
-
-        playRound(hc, cc);
-
-        if(rnds == 5){
-            if(humanScore > computerScore){
-                console.log("YOU WON THE GAME!!!");
-            }else if(humanScore < computerScore){
-                console.log("YOU LOST THE GAME :(");
-            }else {
-                console.log("IT WAS A TIE!");
-            }
-
-            humanScore = 0;
-            computerScore = 0;
-        }
+function capitalize(str){
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+function isValidInput(str){
+    switch(str){
+        case "rock":
+            return true;
+            break;
+        case "paper":
+            return true;
+            break;
+        case "scissors":
+            return true;
+            break;
+        default:
+            return false;
+            break;
     }
 }
+
+gameInput.addEventListener('click', (e) => {
+    if(isValidInput(e.target.id)){
+        if(computerScore == 0 && humanScore == 0){
+            gameInfo.querySelector("#user").classList.remove("loser", "winner");
+            gameInfo.querySelector("#npc").classList.remove("loser", "winner");
+        }
+        let npc = getComputerChoice();
+        let result = checkWinner(e.target.id, npc);
+        if(result == "human"){
+            humanScore++;
+        }else if(result == "computer"){
+            computerScore++;
+        }
+        gameInfo.querySelector("#user .selected").textContent = capitalize(e.target.id);
+        gameInfo.querySelector("#npc .selected").textContent = capitalize(npc);
+        gameInfo.querySelector("#user .score").textContent = humanScore;
+        gameInfo.querySelector("#npc .score").textContent = computerScore;
+        
+        if(computerScore == 5 || humanScore == 5){
+            if(computerScore > humanScore){
+                gameInfo.querySelector("#user").classList.toggle("loser");
+                gameInfo.querySelector("#npc").classList.toggle("winner");
+            }else{
+                gameInfo.querySelector("#user").classList.toggle("winner");
+                gameInfo.querySelector("#npc").classList.toggle("loser");
+            }
+            computerScore = 0;
+            humanScore = 0;
+        }
+    }
+})
